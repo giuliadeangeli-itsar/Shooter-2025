@@ -25,4 +25,29 @@ public class SimplePlayerController : MonoBehaviour
         Move();
         Look()
     }
+
+    void Move()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Vector3 inputDir = new Vector3 (horizontal, 0f, vertical);
+
+        if (inputDir.sqrMagnitude > 1f)
+        {
+            inputDir.Normalize()
+        }
+        float currentSpeed = 0f;
+
+        if (isSprinting)
+        {
+            currentSpeed = speed * sprintMultiplier;
+        }
+        else 
+        {
+            currentSpeed = speed;
+        }
+
+        Vector3 move = cameraTransform.TransformDirection(inputDir) * Time.dataTime;
+        cameraTransform.position += move;
 }
