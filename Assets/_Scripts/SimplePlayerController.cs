@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 
 public class SimplePlayerController : MonoBehaviour
 {
@@ -8,46 +9,75 @@ public class SimplePlayerController : MonoBehaviour
 
     [Header("Camera")]
     public Transform cameraTransform;
-    public float lookSensibility = 3f;
+    public float lookSensitivity = 3f;
 
     private bool isSprinting;
     private float xRotation = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
-        
+        //Utilities.SetCursorLocked(true);
     }
-
-    // Update is called once per frame
     void Update()
     {
         Sprint();
         Move();
-        Look()
+
+        Look();
     }
 
+    // Movimento base con WASD, senza fisica
     void Move()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
+        float horizontal = Input.GetAxis("Horizontal"); // A/D
+        float vertical = Input.GetAxis("Vertical");   // W/S
 
-        Vector3 inputDir = new Vector3 (horizontal, 0f, vertical);
+        Vector3 inputDir = new Vector3(horizontal, 0f, vertical);
 
         if (inputDir.sqrMagnitude > 1f)
         {
-            inputDir.Normalize()
+            inputDir.Normalize(); //importante normalizzare la velocità, poichè adittivamente in diagonale ci si muoverebbe più veloci
         }
+
         float currentSpeed = 0f;
 
         if (isSprinting)
         {
             currentSpeed = speed * sprintMultiplier;
         }
-        else 
+        else
         {
             currentSpeed = speed;
         }
 
-        Vector3 move = cameraTransform.TransformDirection(inputDir) * Time.dataTime;
-        cameraTransform.position += move;
+        //float currentSpeed = speed * (isSprinting ? sprintMultiplier : 1f); ///utilizzando gli operatori in line
+
+        // Direzione relativa al facing del player
+        Vector3 move = transform.TransformDirection(inputDir) * currentSpeed * Time.deltaTime; //deltaTime ci permette di muoverci in maniera indipendente dal frame rate
+        transform.position += move;
+    }
+
+    void Sprint()
+    {
+        isSprinting = Input.GetKey(KeyCode.LeftShift); //se leftshift è premuto, allora il giocatore sta sprintando
+    }
+
+    // Rotazione player + camera con il mouse
+    void Look()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * lookSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * lookSensitivity;
+
+        // Rotazione orizzontale del player
+        transform.Rotate(Vector3.up * mouseX);
+
+        // Rotazione verticale della camera
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -80f, 80f);
+
+        if (cameraTransform != null)
+        {
+            cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        }
+    }
 }
