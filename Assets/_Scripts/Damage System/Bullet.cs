@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -85,6 +86,12 @@ public class Bullet : MonoBehaviour
     /// </summary>
     public void SetDestroyTimer(float timeInSeconds)
     {
-        Destroy(gameObject, timeInSeconds);
+        StartCoroutine(DeactivateBullet(timeInSeconds));
+    }
+
+    IEnumerator DeactivateBullet(float time)
+    {
+        yield return new WaitForSeconds(time);
+        gameObject.SetActive(false);
     }
 }
