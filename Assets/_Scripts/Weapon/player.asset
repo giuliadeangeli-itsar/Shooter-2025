@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Weapon
   bulletPattern: 0
   shootingBehavior: 0
-  range: 50
+  range: 70
   bulletDamage: 50
   clipSize: 12
   fireRate: 5

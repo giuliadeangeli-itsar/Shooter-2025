@@ -15,8 +15,8 @@ MonoBehaviour:
   baseEntity: {fileID: 4189673074383444654, guid: 18be5267fa1aade49aa49147119fd85a, type: 3}
   maxEntityHealth: 150
   startingEntityHealth: 150
-  entityColor: {r: 1, g: 0, b: 0, a: 1}
-  size: 1.5
+  entityColor: {r: 0.84313726, g: 0.4526631, b: 0, a: 1}
+  size: 1.3
   speed: 2
   engageDistance: 20
   weapon: {fileID: 11400000, guid: b8ba5143d4666554d80eaf0742f391ab, type: 2}

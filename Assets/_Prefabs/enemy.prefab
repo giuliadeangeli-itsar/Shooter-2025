@@ -152,6 +152,8 @@ GameObject:
   - component: {fileID: 7715898463184066780}
   - component: {fileID: 6492649264562373512}
   - component: {fileID: 4189673074383444654}
+  - component: {fileID: 7087110891736746765}
+  - component: {fileID: 4010862962742302194}
   m_Layer: 0
   m_Name: enemy
   m_TagString: Untagged
@@ -174,6 +176,7 @@ Transform:
   m_Children:
   - {fileID: 8211309129254511221}
   - {fileID: 7106441173513381059}
+  - {fileID: 395967684889390132}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -53.201, z: 0}
 --- !u!33 &6935545395107610464
@@ -325,7 +328,7 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &7715898463184066780
@@ -359,11 +362,7 @@ MonoBehaviour:
   currentWeapon: {fileID: 11400000, guid: 3c103a1906d58784991f6395fe48b6c8, type: 2}
   weaponHolderTransform: {fileID: 8211309129254511221}
   bulletsLeft: 0
-  detectionRadius: 50
-  scanFrequency: 0.5
-  spotReactionTime: 1.5
-  engageDistance: 50
-  rotationSpeed: 10
+  bulletPoolSize: 20
   weaponPitchSpeed: 10
   minWeaponPitch: -45
   maxWeaponPitch: 60
@@ -384,8 +383,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Entity
   m_Entity: {fileID: 11400000, guid: 3ba3c63312ced194c911e2f056b18167, type: 2}
   m_Health: {fileID: 7715898463184066780}
+  m_Controller: {fileID: 0}
   m_Shooter: {fileID: 6492649264562373512}
   m_Renderer: {fileID: 2858411606014388612}
+--- !u!114 &7087110891736746765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147994153074004002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fda007ccf89cd9a40a76fe875e964f90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAIController
+  shooter: {fileID: 0}
+  patrolPath: {fileID: 0}
+  agent: {fileID: 0}
+  patrolSpeed: 2
+  chaseSpeed: 4
+  fleeSpeed: 6
+  searchSpeed: 3
+  shootRange: 18
+  engageDistance: 50
+  fleeDistance: 8
+  fleeSafeDistance: 15
+  tooCloseTimer: 2
+  searchDuration: 10
+  lookAroundDuration: 3
+  lookAroundSpeed: 90
+  waypointWaitMin: 2
+  waypointWaitMax: 5
+  waypointReachedDistance: 1
+  currentState: 0
+  vision: {fileID: 3292197802613191556}
+  health: {fileID: 0}
+--- !u!195 &4010862962742302194
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1147994153074004002}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &2910472277642180195
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,6 +472,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8211309129254511221}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3487741881618179029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 395967684889390132}
+  - component: {fileID: 3292197802613191556}
+  m_Layer: 0
+  m_Name: VisionScanner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &395967684889390132
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487741881618179029}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9995535, z: -0, w: 0.029880669}
+  m_LocalPosition: {x: 0.07000152, y: 0.21000002, z: -0.16999641}
+  m_LocalScale: {x: 1, y: 0.8330557, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3661261826339290737}
+  m_LocalEulerAnglesHint: {x: 0, y: 176.575, z: 0}
+--- !u!114 &3292197802613191556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487741881618179029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f47aac23e244094d96c5b6e7d3abc13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisionScanner
+  detectionRadius: 30
+  checkInterval: 0.2
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  hasTarget: 0
+  canSeePlayer: 0
+  distanceToPlayer: 999
+  targetPosition: {x: 0, y: 0, z: 0}
+  aimPoint: {x: 0, y: 0, z: 0}
 --- !u!1 &5382858130900607835
 GameObject:
   m_ObjectHideFlags: 0
