@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 804c6e0b124544647ad15f6b6b47c72e, type: 3}
+  m_Name: playerData
+  m_EditorClassIdentifier: Assembly-CSharp::EntityDataSO
+  baseEntity: {fileID: 0}
+  maxEntityHealth: 100
+  startingEntityHealth: 100
+  entityColor: {r: 1, g: 1, b: 1, a: 1}
+  size: 1
+  speed: 2
+  engageDistance: 10
+  weapon: {fileID: 11400000, guid: aa3852e282101024495bac2717dd1348, type: 2}
